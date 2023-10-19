@@ -2,20 +2,65 @@ package com.taufik.pokemonx.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.taufik.pokemonx.R
 import com.taufik.pokemonx.databinding.ItemPokeListBinding
 import com.taufik.pokemonx.model.home.PokemonListResult
-import com.taufik.pokemonx.utils.getPokemonNumber
+import com.taufik.pokemonx.utils.getPokemonImage
 import com.taufik.pokemonx.utils.loadImage
+import java.util.Locale
 
 class HomeAdapter(
-//    private val imageUrl: String,
     private val onItemClickListener: (PokemonListResult) -> Unit
 ) : ListAdapter<PokemonListResult, HomeAdapter.ViewHolder>(
     HOME_DIFF_CALLBACK
-) {
+), Filterable {
+
+    private var listOfPokemon = listOf<PokemonListResult>()
+    private val searchFilter = object : Filter() {
+        override fun performFiltering(p0: CharSequence): FilterResults {
+            val filteredList = mutableListOf<PokemonListResult>()
+            if (p0.isEmpty()) {
+                filteredList.addAll(listOfPokemon)
+            } else {
+                val filterPattern = p0.toString().lowercase(Locale.ROOT).trim()
+                listOfPokemon.forEach {
+                    if (it.name.lowercase().contains(filterPattern)) filteredList.add(it)
+                }
+            }
+
+            val result = FilterResults()
+            result.values = filteredList
+            return result
+        }
+
+        override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
+            submitList(p1?.values as MutableList<PokemonListResult>?)
+        }
+    }
+
+    fun setSearchData(list: List<PokemonListResult>) {
+        this.listOfPokemon = list
+        submitList(list)
+    }
+
+    fun sortDataAscending(list: List<PokemonListResult>) {
+        this.listOfPokemon = list.sortedBy { it.name }
+        submitList(list)
+    }
+
+    fun sortDataDescending(list: List<PokemonListResult>) {
+        this.listOfPokemon = list.sortedByDescending { it.name }
+        submitList(list)
+    }
+
+    override fun getFilter(): Filter = searchFilter
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ItemPokeListBinding.inflate(
@@ -34,10 +79,11 @@ class HomeAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: PokemonListResult) {
             binding.apply {
-                imgPokeCharacter.loadImage(
-                    url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getPokemonNumber(data.url)}.png"
-                )
-                tvPokeName.text = data.name
+                imgPokeCharacter.loadImage(url = getPokemonImage(data.url))
+                cardBgMenu.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.primary_700))
+                tvPokeName.text = data.name.replaceFirstChar {
+                    if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+                }
                 itemView.setOnClickListener {
                     onItemClickListener(data)
                 }
