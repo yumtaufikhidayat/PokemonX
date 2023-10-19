@@ -11,13 +11,106 @@
         android:id="@+id/toolbarHome"
         layout="@layout/toolbar_main_general"/>
 
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etSearch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_edit_text"
+        android:padding="8dp"
+        android:drawableStart="@drawable/outline_search"
+        android:drawablePadding="8dp"
+        android:textColorHint="@color/white_200"
+        android:layout_margin="16dp"
+        android:inputType="text"
+        android:imeOptions="actionSearch"
+        android:hint="@string/text_search_pokemon_name"
+        app:layout_constraintTop_toBottomOf="@id/toolbarHome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgSortFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/outline_sort"
+        app:layout_constraintTop_toBottomOf="@id/etSearch"
+        app:layout_constraintStart_toStartOf="@id/etSearch"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSortFilterBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/text_sort_filter"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/imgSortFilter"
+        app:layout_constraintBottom_toBottomOf="@id/imgSortFilter"
+        app:layout_constraintStart_toEndOf="@id/imgSortFilter"/>
+
+    <RadioGroup
+        android:id="@+id/rgSortFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:orientation="horizontal"
+        android:checkedButton="@id/rbAll"
+        app:layout_constraintTop_toTopOf="@id/tvSortFilterBy"
+        app:layout_constraintBottom_toBottomOf="@id/tvSortFilterBy"
+        app:layout_constraintStart_toEndOf="@id/tvSortFilterBy">
+
+        <RadioButton
+            android:id="@+id/rbAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:paddingHorizontal="16dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/bg_null_radio_button"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:textColor="@drawable/radio_text_selector"
+            android:text="@string/text_sort_all"/>
+
+        <RadioButton
+            android:id="@+id/rbAZ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:paddingHorizontal="16dp"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/bg_null_radio_button"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:textColor="@drawable/radio_text_selector"
+            android:text="@string/text_sort_a_z"/>
+
+        <RadioButton
+            android:id="@+id/rbZA"
+            android:layout_width="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:paddingHorizontal="16dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/radio_selector"
+            android:button="@drawable/bg_null_radio_button"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:textColor="@drawable/radio_text_selector"
+            android:text="@string/text_sort_z_a"/>
+
+    </RadioGroup>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHome"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         tools:listitem="@layout/item_poke_list"
-        app:layout_constraintTop_toBottomOf="@id/toolbarHome"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/tvSortFilterBy"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/etSearch"
+        app:layout_constraintEnd_toEndOf="@id/etSearch"/>
 
     <ProgressBar
         android:id="@+id/pbLoading"
