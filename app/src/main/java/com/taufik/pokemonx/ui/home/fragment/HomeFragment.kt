@@ -1,16 +1,23 @@
 package com.taufik.pokemonx.ui.home.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.RadioButton
+import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.taufik.pokemonx.R
 import com.taufik.pokemonx.data.remote.NetworkResult
 import com.taufik.pokemonx.databinding.FragmentHomeBinding
+import com.taufik.pokemonx.model.home.PokemonListResult
 import com.taufik.pokemonx.ui.home.adapter.HomeAdapter
 import com.taufik.pokemonx.ui.home.viewmodel.HomeViewModel
 import com.taufik.pokemonx.utils.showErrorLog
@@ -38,6 +45,7 @@ class HomeFragment : Fragment() {
         setToolbarHome()
         setHomeAdapter()
         setPokemonListObserver()
+        showSearchPokemonList()
     }
 
     private fun setToolbarHome() {
@@ -45,9 +53,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun setHomeAdapter() {
-        /*homeAdapter = HomeAdapter {
-            Toast.makeText(requireContext(), "tes", Toast.LENGTH_SHORT).show()
-        }*/
         binding.rvHome.apply {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
@@ -63,7 +68,8 @@ class HomeFragment : Fragment() {
                     is NetworkResult.Loading -> showLoading(true)
                     is NetworkResult.Success -> {
                         showLoading(false)
-                        homeAdapter.submitList(it.data?.results)
+                        it.data?.results?.let { listOfData -> homeAdapter.setSearchData(listOfData) }
+                        sortFilterData(it.data?.results)
                     }
                     is NetworkResult.Error -> {
                         showLoading(false)
@@ -71,6 +77,55 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
+        }
+    }
+
+    private fun showSearchPokemonList() {
+        binding.etSearch.apply {
+            showKeyboard()
+            setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    hideKeyboard()
+                    return@OnEditorActionListener true
+                }
+                false
+            })
+
+            addTextChangedListener(afterTextChanged = { q ->
+                homeAdapter.filter.filter(q.toString())
+            })
+        }
+    }
+
+    private fun sortFilterData(results: List<PokemonListResult>?) {
+        if (!results.isNullOrEmpty()) {
+            binding.rgSortFilter.setOnCheckedChangeListener { group, _ ->
+                val radioId = group.checkedRadioButtonId
+                val selectedRadioButton = group.findViewById<RadioButton>(radioId)
+                when (group.indexOfChild(selectedRadioButton)) {
+                    0 -> homeAdapter.setSearchData(results)
+                    1 -> homeAdapter.sortDataAscending(results.sortedBy { it.name })
+                    else -> homeAdapter.sortDataDescending(results.sortedByDescending { it.name })
+                }
+            }
+        } else {
+            showErrorLog(TAG, getString(R.string.text_oops))
+        }
+    }
+
+    private fun showKeyboard() {
+        binding.etSearch.apply {
+            requestFocus()
+            val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+        }
+    }
+
+    private fun hideKeyboard() {
+        binding.etSearch.apply {
+            clearFocus()
+            val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(this.windowToken, 0)
         }
     }
 
