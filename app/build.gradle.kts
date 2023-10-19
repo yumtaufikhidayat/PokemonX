@@ -10,12 +10,12 @@ plugins {
 
 android {
     namespace = "com.taufik.pokemonx"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.taufik.pokemonx"
         minSdk = 27
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -47,6 +47,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -56,7 +60,7 @@ dependencies {
 
     // UI
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     // Testing
@@ -65,7 +69,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     // Navigation Component
-    val navigationVersion = "2.6.0"
+    val navigationVersion = "2.7.4"
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-dynamic-features-fragment:$navigationVersion")
@@ -94,13 +98,13 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion")
 
     // Android KTX
-    val activityKtxVersion = "1.7.2"
+    val activityKtxVersion = "1.8.0"
     val fragmentKtxVersion = "1.6.1"
     implementation("androidx.activity:activity-ktx:$activityKtxVersion")
     implementation("androidx.fragment:fragment-ktx:$fragmentKtxVersion")
 
     // Hilt
-    val hiltVersion = "2.47"
+    val hiltVersion = "2.48"
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-compiler:$hiltVersion")
 }
