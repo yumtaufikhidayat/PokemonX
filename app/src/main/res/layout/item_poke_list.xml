@@ -11,18 +11,29 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="?android:selectableItemBackground">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imgPokeCharacter"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="12dp"
-            tools:src="@tools:sample/avatars"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardBgMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardUseCompatPadding="false"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgPokeCharacter"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="8dp"
+                tools:src="@tools:sample/avatars"/>
+
+        </androidx.cardview.widget.CardView>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPokeName"
@@ -35,9 +46,9 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintTop_toTopOf="@id/imgPokeCharacter"
-            app:layout_constraintBottom_toBottomOf="@id/imgPokeCharacter"
-            app:layout_constraintStart_toEndOf="@id/imgPokeCharacter"
+            app:layout_constraintTop_toTopOf="@id/cardBgMenu"
+            app:layout_constraintBottom_toBottomOf="@id/cardBgMenu"
+            app:layout_constraintStart_toEndOf="@id/cardBgMenu"
             app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
