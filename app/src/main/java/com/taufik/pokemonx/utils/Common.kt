@@ -1,6 +1,5 @@
 package com.taufik.pokemonx.utils
 
-import android.content.Context
 import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -13,6 +12,10 @@ fun ImageView.loadImage(
         .load(url)
         .placeholder(R.color.primary_700)
         .into(this)
+}
+
+fun getPokemonImage(url: String): String {
+    return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getPokemonNumber(url)}.png"
 }
 
 fun getPokemonNumber(url: String): Int {
