@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">PokemonX</string>
-    <string name="home">Home</string>
-    <string name="pokemon_detail">%1$s Details</string>
-    <string name="favorite">Favorite</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_search_pokemon_name">Search Pokemon name…</string>
+    <string name="text_sort_filter">Sort &amp; Filter</string>
+    <string name="text_sort_all">All</string>
+    <string name="text_sort_a_z">A to Z</string>
+    <string name="text_sort_z_a">Z to A</string>
+    <string name="text_oops">Oops! Something went wrong.</string>
 </resources>
