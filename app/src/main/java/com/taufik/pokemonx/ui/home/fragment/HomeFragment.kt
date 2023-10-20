@@ -20,6 +20,8 @@ import com.taufik.pokemonx.databinding.FragmentHomeBinding
 import com.taufik.pokemonx.model.home.PokemonListResult
 import com.taufik.pokemonx.ui.home.adapter.HomeAdapter
 import com.taufik.pokemonx.ui.home.viewmodel.HomeViewModel
+import com.taufik.pokemonx.utils.getPokemonImage
+import com.taufik.pokemonx.utils.getPokemonNumber
 import com.taufik.pokemonx.utils.showErrorLog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -68,7 +70,18 @@ class HomeFragment : Fragment() {
                     is NetworkResult.Loading -> showLoading(true)
                     is NetworkResult.Success -> {
                         showLoading(false)
-                        it.data?.results?.let { listOfData -> homeAdapter.setSearchData(listOfData) }
+                        val results = it.data?.results
+                        results?.let { listOfData ->
+                            homeAdapter.setSearchData(listOfData)
+                            listOfData.forEach { pokemonList ->
+                                insertPokemonList(
+                                    id = getPokemonNumber(pokemonList.url),
+                                    name = pokemonList.name,
+                                    url = pokemonList.url,
+                                    imageUrl = getPokemonImage(pokemonList.url)
+                                )
+                            }
+                        }
                         sortFilterData(it.data?.results)
                     }
                     is NetworkResult.Error -> {
@@ -111,6 +124,20 @@ class HomeFragment : Fragment() {
         } else {
             showErrorLog(TAG, getString(R.string.text_oops))
         }
+    }
+
+    private fun insertPokemonList(
+        id: Int,
+        name: String,
+        url: String,
+        imageUrl: String,
+    ) {
+        viewModel.savePokemonList(
+            id = id,
+            url = url,
+            name = name,
+            imageUrl = imageUrl
+        )
     }
 
     private fun showKeyboard() {
