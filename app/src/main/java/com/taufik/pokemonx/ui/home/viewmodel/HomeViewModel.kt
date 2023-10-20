@@ -5,11 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.taufik.pokemonx.data.PokemonXRepository
+import com.taufik.pokemonx.data.local.PokemonEntity
 import com.taufik.pokemonx.data.remote.NetworkResult
 import com.taufik.pokemonx.model.detail.DetailPokemonResponse
 import com.taufik.pokemonx.model.home.PokemonListResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,6 +34,19 @@ class HomeViewModel @Inject constructor(
     fun getPokemonByName(name: String) = viewModelScope.launch {
         repository.getPokemonByName(name).collect {
             _getPokemonByName.value = it
+        }
+    }
+
+    fun savePokemonList(
+        id: Int,
+        name: String,
+        url: String,
+        imageUrl: String
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.savePokemonList(
+                PokemonEntity(id, name, url, imageUrl)
+            )
         }
     }
 }
