@@ -80,12 +80,12 @@ dependencies {
     val glideVersion = "4.16.0"
     implementation("com.github.bumptech.glide:glide:$glideVersion")
 
-    /*// Room + KTX
+    // Room + KTX
     val roomVersion = "2.5.2"
     implementation("androidx.room:room-runtime:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
     androidTestImplementation("androidx.room:room-testing:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")*/
+    implementation("androidx.room:room-ktx:$roomVersion")
 
     // Retrofit + OkHttp
     val retrofitVersion = "2.9.0"
