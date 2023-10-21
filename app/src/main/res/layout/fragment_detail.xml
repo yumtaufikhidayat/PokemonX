@@ -77,6 +77,16 @@
                     app:layout_constraintStart_toStartOf="@id/tvPokemonName"
                     app:layout_constraintEnd_toEndOf="@id/tvPokemonName"/>
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvGenerationHabitat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/text_generation_growth_rate_habitat"
+                    android:textColor="@color/black"
+                    app:layout_constraintTop_toBottomOf="@id/tvHeightWeight"
+                    app:layout_constraintStart_toStartOf="@id/tvPokemonName"
+                    app:layout_constraintEnd_toEndOf="@id/tvPokemonName"/>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvTypes"
                     android:layout_width="wrap_content"
@@ -85,7 +95,7 @@
                     android:layout_marginHorizontal="36dp"
                     tools:listitem="@layout/item_types"
                     tools:itemCount="1"
-                    app:layout_constraintTop_toBottomOf="@id/tvHeightWeight"
+                    app:layout_constraintTop_toBottomOf="@id/tvGenerationHabitat"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 

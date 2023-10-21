@@ -35,7 +35,7 @@ class DetailFragment : Fragment() {
 
     private var name = ""
 
-    override fun onCreateView(
+        override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -143,16 +143,28 @@ class DetailFragment : Fragment() {
                 when (it) {
                     is NetworkResult.Loading -> {}
                     is NetworkResult.Success -> {
-                        val text = it.data?.flavorTextEntries
-                            ?.filter { lang -> lang.language.name == "en" }
-                            ?.map { flavor -> flavor.flavorText
-                                .replace("\n", " ")
-                                .replace("\\f", " ")
+                        binding.apply {
+                            it.data?.let { species ->
+                                val text = species.flavorTextEntries
+                                    .filter { lang -> lang.language.name == "en" }
+                                    .map { flavor ->
+                                        flavor.flavorText
+                                            .replace("\n", " ")
+                                            .replace("\\f", " ")
+                                    }
+                                tvAboutPokemonDesc.text = text.toString()
+                                    .replace("[", "")
+                                    .replace("]", "")
+                                    .replace(".,", "")
+
+                                tvGenerationHabitat.text = getString(
+                                    R.string.text_generation_growth_rate_habitat,
+                                    species.generation.name,
+                                    species.growthRate.name,
+                                    species.habitat.name
+                                )
                             }
-                        binding.tvAboutPokemonDesc.text = text.toString()
-                            .replace("[", "")
-                            .replace("]", "")
-                            .replace(".,", "")
+                        }
                     }
                     is NetworkResult.Error -> {}
                 }
