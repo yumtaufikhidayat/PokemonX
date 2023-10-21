@@ -7,6 +7,10 @@
     <string name="text_sort_z_a">Z to A</string>
     <string name="text_oops">Oops! Something went wrong.</string>
     <string name="text_pokemon_name_rating">%1$s #%2$s</string>
+    <string name="text_about_pokemon">About Pokemon</string>
+    <string name="text_abilities">Abilities</string>
     <string name="text_stats">Stats</string>
     <string name="text_number">60</string>
+    <string name="text_height">%1$s m</string>
+    <string name="text_weight">%1$s kg</string>
 </resources>
