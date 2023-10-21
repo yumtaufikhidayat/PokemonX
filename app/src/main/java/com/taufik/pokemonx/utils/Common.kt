@@ -4,6 +4,7 @@ import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.taufik.pokemonx.R
+import java.util.Locale
 
 fun ImageView.loadImage(
     url: String
@@ -12,6 +13,12 @@ fun ImageView.loadImage(
         .load(url)
         .placeholder(R.color.primary_700)
         .into(this)
+}
+
+fun String.replaceFirstChar(): String {
+    return replaceFirstChar {
+        if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+    }
 }
 
 fun getPokemonImage(url: String): String {
