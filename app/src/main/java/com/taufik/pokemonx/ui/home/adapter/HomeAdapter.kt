@@ -13,6 +13,7 @@ import com.taufik.pokemonx.databinding.ItemPokeListBinding
 import com.taufik.pokemonx.model.home.PokemonListResult
 import com.taufik.pokemonx.utils.getPokemonImage
 import com.taufik.pokemonx.utils.loadImage
+import com.taufik.pokemonx.utils.replaceFirstChar
 import java.util.Locale
 
 class HomeAdapter(
@@ -81,9 +82,7 @@ class HomeAdapter(
             binding.apply {
                 imgPokeCharacter.loadImage(url = getPokemonImage(data.url))
                 cardBgMenu.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.primary_700))
-                tvPokeName.text = data.name.replaceFirstChar {
-                    if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-                }
+                tvPokeName.text = data.name.replaceFirstChar()
                 clPokeList.setOnClickListener {
                     onItemClickListener(data)
                 }
