@@ -16,4 +16,5 @@
     <string name="text_height_weight">%1$s \u2022 %2$s</string>
     <string name="text_generation_growth_rate_habitat">%1$s \u2022 %2$s \u2022 %3$s</string>
     <string name="text_moves">Moves</string>
+    <string name="text_back_to_exit">Press back again to exit</string>
 </resources>
