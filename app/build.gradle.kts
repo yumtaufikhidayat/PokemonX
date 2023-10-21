@@ -21,15 +21,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "BASE_URL", "\"https://pokeapi.co/api/v2/\"")
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += mapOf(
-                    "room.schemaLocation" to "$projectDir/schemas",
-                    "room.incremental" to "true"
-                )
-            }
-        }
     }
 
     buildTypes {
