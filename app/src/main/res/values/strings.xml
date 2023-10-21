@@ -6,4 +6,7 @@
     <string name="text_sort_a_z">A to Z</string>
     <string name="text_sort_z_a">Z to A</string>
     <string name="text_oops">Oops! Something went wrong.</string>
+    <string name="text_pokemon_name_rating">%1$s #%2$s</string>
+    <string name="text_stats">Stats</string>
+    <string name="text_number">60</string>
 </resources>
