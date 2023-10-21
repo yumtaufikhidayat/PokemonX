@@ -21,6 +21,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "BASE_URL", "\"https://pokeapi.co/api/v2/\"")
+        setProperty("archivesBaseName", "PokemonX_v$versionName($versionCode)")
     }
 
     buildTypes {
