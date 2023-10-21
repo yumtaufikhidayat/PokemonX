@@ -22,7 +22,7 @@
         android:textColorHint="@color/white_200"
         android:layout_margin="16dp"
         android:inputType="text"
-        android:imeOptions="actionSearch"
+        android:imeOptions="actionDone"
         android:hint="@string/text_search_pokemon_name"
         app:layout_constraintTop_toBottomOf="@id/toolbarHome"
         app:layout_constraintStart_toStartOf="parent"
