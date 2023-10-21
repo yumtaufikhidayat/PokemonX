@@ -13,4 +13,5 @@
     <string name="text_number">60</string>
     <string name="text_height">%1$s m</string>
     <string name="text_weight">%1$s kg</string>
+    <string name="text_height_weight">%1$s \u2022 %2$s</string>
 </resources>
