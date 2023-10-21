@@ -9,15 +9,18 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.RadioButton
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.taufik.pokemonx.R
 import com.taufik.pokemonx.data.remote.NetworkResult
 import com.taufik.pokemonx.databinding.FragmentHomeBinding
 import com.taufik.pokemonx.model.home.PokemonListResult
+import com.taufik.pokemonx.ui.detail.fragment.DetailFragment
 import com.taufik.pokemonx.ui.home.adapter.HomeAdapter
 import com.taufik.pokemonx.ui.home.viewmodel.HomeViewModel
 import com.taufik.pokemonx.utils.getPokemonImage
@@ -32,7 +35,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel by viewModels<HomeViewModel>()
-    private val homeAdapter by lazy { HomeAdapter {} }
+    private val homeAdapter by lazy { HomeAdapter { navigateToDetail(it.name) } }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -138,6 +141,13 @@ class HomeFragment : Fragment() {
             name = name,
             imageUrl = imageUrl
         )
+    }
+
+    private fun navigateToDetail(name: String) {
+        val bundle = bundleOf(
+            DetailFragment.EXTRA_DETAIL to name
+        )
+        findNavController().navigate(R.id.detailFragment, bundle)
     }
 
     private fun showKeyboard() {
