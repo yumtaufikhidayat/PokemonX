@@ -84,7 +84,7 @@ class HomeAdapter(
                 tvPokeName.text = data.name.replaceFirstChar {
                     if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
                 }
-                itemView.setOnClickListener {
+                clPokeList.setOnClickListener {
                     onItemClickListener(data)
                 }
             }
