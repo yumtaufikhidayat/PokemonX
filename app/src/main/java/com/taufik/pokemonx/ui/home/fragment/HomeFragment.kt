@@ -1,14 +1,10 @@
 package com.taufik.pokemonx.ui.home.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.RadioButton
-import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -97,20 +93,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun showSearchPokemonList() {
-        binding.etSearch.apply {
-            showKeyboard()
-            setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    hideKeyboard()
-                    return@OnEditorActionListener true
-                }
-                false
-            })
-
-            addTextChangedListener(afterTextChanged = { q ->
-                homeAdapter.filter.filter(q.toString())
-            })
-        }
+        binding.etSearch.addTextChangedListener(afterTextChanged = { q ->
+            homeAdapter.filter.filter(q.toString())
+        })
     }
 
     private fun sortFilterData(results: List<PokemonListResult>?) {
@@ -148,22 +133,6 @@ class HomeFragment : Fragment() {
             DetailFragment.EXTRA_DETAIL to name
         )
         findNavController().navigate(R.id.detailFragment, bundle)
-    }
-
-    private fun showKeyboard() {
-        binding.etSearch.apply {
-            requestFocus()
-            val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
-        }
-    }
-
-    private fun hideKeyboard() {
-        binding.etSearch.apply {
-            clearFocus()
-            val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(this.windowToken, 0)
-        }
     }
 
     private fun showLoading(isShow: Boolean) {
