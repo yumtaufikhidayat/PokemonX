@@ -8,11 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.taufik.pokemonx.R
 import com.taufik.pokemonx.data.remote.NetworkResult
 import com.taufik.pokemonx.databinding.FragmentDetailBinding
-import com.taufik.pokemonx.ui.detail.adapter.TypesAdapter
+import com.taufik.pokemonx.ui.detail.adapter.MovesAdapter
 import com.taufik.pokemonx.ui.detail.adapter.StatsAdapter
+import com.taufik.pokemonx.ui.detail.adapter.TypesAdapter
 import com.taufik.pokemonx.ui.detail.viewmodel.DetailViewModel
 import com.taufik.pokemonx.utils.loadImage
 import com.taufik.pokemonx.utils.replaceFirstChar
@@ -27,6 +31,7 @@ class DetailFragment : Fragment() {
     private val viewModel by viewModels<DetailViewModel>()
     private val typesAdapter by lazy { TypesAdapter() }
     private val statsAdapter by lazy { StatsAdapter() }
+    private val movesAdapter by lazy { MovesAdapter() }
 
     private var name = ""
 
@@ -62,6 +67,7 @@ class DetailFragment : Fragment() {
     private fun initAdapter() {
         initAbilitiesAdapter()
         initStatsAdapter()
+        initMovesAdapter()
     }
 
     private fun initAbilitiesAdapter() {
@@ -79,6 +85,19 @@ class DetailFragment : Fragment() {
         }
     }
 
+    private fun initMovesAdapter() {
+        val flexLayoutManager = FlexboxLayoutManager(requireContext())
+        flexLayoutManager.apply {
+            flexDirection = FlexDirection.ROW
+            justifyContent = JustifyContent.FLEX_START
+        }
+        binding.rvMoves.apply {
+            layoutManager = flexLayoutManager
+            isNestedScrollingEnabled = false
+            adapter = movesAdapter
+        }
+    }
+
     private fun showPokemonInfoObserver() {
         viewModel.apply {
             getPokemonByName(name)
@@ -88,7 +107,7 @@ class DetailFragment : Fragment() {
                     is NetworkResult.Success -> {
                         binding.apply {
                             it.data?.let { details ->
-                                imgPokemon.loadImage(details.sprites.frontShiny)
+                                imgPokemon.loadImage(details.sprites.frontDefault)
                                 tvPokemonName.text = getString(
                                     R.string.text_pokemon_name_rating,
                                     details.name.replaceFirstChar(),
@@ -105,7 +124,9 @@ class DetailFragment : Fragment() {
                                 tvAbilitiesDesc.text = details.abilities.joinToString(", ") { ability ->
                                     ability.ability.name.replaceFirstChar()
                                 }
+
                                 statsAdapter.submitList(details.stats)
+                                movesAdapter.submitList(details.moves)
                             }
                         }
                     }

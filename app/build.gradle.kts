@@ -72,7 +72,7 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:$glideVersion")
 
     // Room + KTX
-    val roomVersion = "2.5.2"
+    val roomVersion = "2.6.0"
     implementation("androidx.room:room-runtime:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
     androidTestImplementation("androidx.room:room-testing:$roomVersion")
@@ -100,4 +100,8 @@ dependencies {
     val hiltVersion = "2.48.1"
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-compiler:$hiltVersion")
+
+    // FlexboxLayout
+    val flexboxVersion = "3.0.0"
+    implementation("com.google.android.flexbox:flexbox:$flexboxVersion")
 }

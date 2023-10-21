@@ -161,6 +161,37 @@
                     app:layout_constraintStart_toStartOf="@id/tvStats"
                     app:layout_constraintEnd_toEndOf="@id/tvStats"/>
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvMoves"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/primary_600"
+                    android:textStyle="bold"
+                    android:text="@string/text_moves"
+                    app:layout_constraintTop_toBottomOf="@id/rvStats"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/flexMoves"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tvMoves"
+                    app:layout_constraintStart_toStartOf="@id/tvMoves"
+                    app:layout_constraintEnd_toEndOf="@id/tvMoves">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvMoves"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/item_types"/>
+
+                </com.google.android.flexbox.FlexboxLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
