@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:background="@drawable/radio_selected"
+        android:background="@drawable/bg_types"
         android:textColor="@color/white"
         tools:text="@tools:sample/lorem"
         android:textAlignment="center"

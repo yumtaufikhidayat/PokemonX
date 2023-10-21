@@ -5,15 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.taufik.pokemonx.databinding.ItemAbilitiesBinding
-import com.taufik.pokemonx.model.detail.Ability
+import com.taufik.pokemonx.databinding.ItemTypesBinding
+import com.taufik.pokemonx.model.detail.Type
 import com.taufik.pokemonx.utils.replaceFirstChar
 
-class AbilitiesAdapter: ListAdapter<Ability, AbilitiesAdapter.ViewHolder>(ABILITIES_DIFF_CALLBACK) {
+class TypesAdapter: ListAdapter<Type, TypesAdapter.ViewHolder>(ABILITIES_DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemAbilitiesBinding.inflate(
+            ItemTypesBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -25,20 +25,20 @@ class AbilitiesAdapter: ListAdapter<Ability, AbilitiesAdapter.ViewHolder>(ABILIT
         holder.bind(getItem(position))
     }
 
-    inner class ViewHolder(private val binding: ItemAbilitiesBinding) :
+    inner class ViewHolder(private val binding: ItemTypesBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Ability) {
-            binding.tvAbilities.text = data.ability.name.replaceFirstChar()
+        fun bind(data: Type) {
+            binding.tvAbilities.text = data.type.name.replaceFirstChar()
         }
     }
 
     companion object {
-        private val ABILITIES_DIFF_CALLBACK = object : DiffUtil.ItemCallback<Ability>() {
-            override fun areItemsTheSame(oldItem: Ability, newItem: Ability): Boolean {
-                return oldItem.ability.url == newItem.ability.url
+        private val ABILITIES_DIFF_CALLBACK = object : DiffUtil.ItemCallback<Type>() {
+            override fun areItemsTheSame(oldItem: Type, newItem: Type): Boolean {
+                return oldItem.type.url == newItem.type.url
             }
 
-            override fun areContentsTheSame(oldItem: Ability, newItem: Ability): Boolean {
+            override fun areContentsTheSame(oldItem: Type, newItem: Type): Boolean {
                 return oldItem == newItem
             }
         }
