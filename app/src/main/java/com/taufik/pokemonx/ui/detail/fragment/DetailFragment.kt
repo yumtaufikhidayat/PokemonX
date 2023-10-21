@@ -20,6 +20,7 @@ import com.taufik.pokemonx.ui.detail.adapter.TypesAdapter
 import com.taufik.pokemonx.ui.detail.viewmodel.DetailViewModel
 import com.taufik.pokemonx.utils.loadImage
 import com.taufik.pokemonx.utils.replaceFirstChar
+import com.taufik.pokemonx.utils.showErrorLog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -130,7 +131,7 @@ class DetailFragment : Fragment() {
                             }
                         }
                     }
-                    is NetworkResult.Error -> {}
+                    is NetworkResult.Error -> showErrorLog(TAG, it.message)
                 }
             }
         }
@@ -166,7 +167,7 @@ class DetailFragment : Fragment() {
                             }
                         }
                     }
-                    is NetworkResult.Error -> {}
+                    is NetworkResult.Error -> showErrorLog(TAG, it.message)
                 }
             }
         }
@@ -179,5 +180,6 @@ class DetailFragment : Fragment() {
 
     companion object {
         const val EXTRA_DETAIL = "EXTRA_DETAIL"
+        private const val TAG = "detail"
     }
 }
