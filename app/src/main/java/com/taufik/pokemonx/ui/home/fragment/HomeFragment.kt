@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.taufik.pokemonx.R
@@ -23,6 +26,9 @@ import com.taufik.pokemonx.utils.getPokemonImage
 import com.taufik.pokemonx.utils.getPokemonNumber
 import com.taufik.pokemonx.utils.showErrorLog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -32,6 +38,24 @@ class HomeFragment : Fragment() {
 
     private val viewModel by viewModels<HomeViewModel>()
     private val homeAdapter by lazy { HomeAdapter { navigateToDetail(it.name) } }
+
+    private var doubleBackToExitPressedOnce = false
+    private val backPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (doubleBackToExitPressedOnce) {
+                requireActivity().finish()
+                return
+            }
+
+            doubleBackToExitPressedOnce = true
+            Toast.makeText(requireContext(), getString(R.string.text_back_to_exit), Toast.LENGTH_SHORT).show()
+
+            lifecycleScope.launch {
+                delay(2.seconds)
+                doubleBackToExitPressedOnce = false
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +67,12 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            backPressedCallback
+        )
+
         setToolbarHome()
         setHomeAdapter()
         setPokemonListObserver()
