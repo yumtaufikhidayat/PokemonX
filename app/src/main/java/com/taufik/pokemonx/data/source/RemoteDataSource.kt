@@ -5,6 +5,7 @@ import com.taufik.pokemonx.data.remote.BaseApiResponse
 import com.taufik.pokemonx.data.remote.NetworkResult
 import com.taufik.pokemonx.model.detail.DetailPokemonResponse
 import com.taufik.pokemonx.model.home.PokemonListResponse
+import com.taufik.pokemonx.model.species.DetailPokemonSpeciesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -28,4 +29,12 @@ class RemoteDataSource @Inject constructor(
             emit(safeApiCall { apiService.getPokemonByName(name) })
         }.flowOn(dispatchersIO)
     }
+
+    fun getPokemonSpecies(name: String): Flow<NetworkResult<DetailPokemonSpeciesResponse>> {
+        return flow {
+            emit(safeApiCall { apiService.getPokemonSpecies(name) })
+        }.flowOn(dispatchersIO)
+    }
+
+
 }

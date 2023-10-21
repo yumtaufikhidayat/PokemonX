@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.taufik.pokemonx.data.PokemonXRepository
 import com.taufik.pokemonx.data.remote.NetworkResult
 import com.taufik.pokemonx.model.detail.DetailPokemonResponse
+import com.taufik.pokemonx.model.species.DetailPokemonSpeciesResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,9 +20,18 @@ class DetailViewModel @Inject constructor(
     private val _getPokemonByName: MutableLiveData<NetworkResult<DetailPokemonResponse>> = MutableLiveData()
     val getPokemonByName: LiveData<NetworkResult<DetailPokemonResponse>> = _getPokemonByName
 
+    private val _getPokemonSpecies: MutableLiveData<NetworkResult<DetailPokemonSpeciesResponse>> = MutableLiveData()
+    val getPokemonSpecies: LiveData<NetworkResult<DetailPokemonSpeciesResponse>> = _getPokemonSpecies
+
     fun getPokemonByName(name: String) = viewModelScope.launch {
         repository.getPokemonByName(name).collect {
             _getPokemonByName.value = it
+        }
+    }
+
+    fun getPokemonSpecies(name: String) = viewModelScope.launch {
+        repository.getPokemonSpecies(name).collect {
+            _getPokemonSpecies.value = it
         }
     }
 }

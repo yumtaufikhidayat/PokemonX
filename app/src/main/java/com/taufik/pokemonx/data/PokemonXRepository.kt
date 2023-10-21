@@ -13,5 +13,7 @@ class PokemonXRepository @Inject constructor(
 
     fun getPokemonByName(name: String) = remoteDataSource.getPokemonByName(name)
 
+    fun getPokemonSpecies(name: String) = remoteDataSource.getPokemonSpecies(name)
+
     fun savePokemonList(pokemonEntity: PokemonEntity) = localDataSource.savePokemonList(pokemonEntity)
 }
