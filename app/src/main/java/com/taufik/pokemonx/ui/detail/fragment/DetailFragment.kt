@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.taufik.pokemonx.R
 import com.taufik.pokemonx.data.remote.NetworkResult
 import com.taufik.pokemonx.databinding.FragmentDetailBinding
-import com.taufik.pokemonx.ui.detail.adapter.AbilitiesAdapter
+import com.taufik.pokemonx.ui.detail.adapter.TypesAdapter
 import com.taufik.pokemonx.ui.detail.adapter.StatsAdapter
 import com.taufik.pokemonx.ui.detail.viewmodel.DetailViewModel
 import com.taufik.pokemonx.utils.loadImage
@@ -25,7 +25,7 @@ class DetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel by viewModels<DetailViewModel>()
-    private val abilitiesAdapter by lazy { AbilitiesAdapter() }
+    private val typesAdapter by lazy { TypesAdapter() }
     private val statsAdapter by lazy { StatsAdapter() }
 
     private var name = ""
@@ -46,6 +46,7 @@ class DetailFragment : Fragment() {
         getBundleData()
         initAdapter()
         showPokemonInfoObserver()
+        showPokemonInfoSpeciesObserver()
     }
 
     private fun handlingBackArrow() {
@@ -64,15 +65,16 @@ class DetailFragment : Fragment() {
     }
 
     private fun initAbilitiesAdapter() {
-        binding.rvAbilities.apply {
+        binding.rvTypes.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = abilitiesAdapter
+            adapter = typesAdapter
         }
     }
 
     private fun initStatsAdapter() {
         binding.rvStats.apply {
             layoutManager = LinearLayoutManager(requireContext())
+            isNestedScrollingEnabled = false
             adapter = statsAdapter
         }
     }
@@ -92,12 +94,45 @@ class DetailFragment : Fragment() {
                                     details.name.replaceFirstChar(),
                                     details.id.toString()
                                 )
-                                abilitiesAdapter.submitList(details.abilities)
+
+                                val height = details.height.toDouble() / 10 // from dm -> m
+                                val weight = details.weight / 10 // from hg -> kg
+                                val heightStr = getString(R.string.text_height, height.toString())
+                                val weightStr = getString(R.string.text_weight, weight.toString())
+                                tvHeightWeight.text = getString(R.string.text_height_weight, heightStr, weightStr)
+
+                                typesAdapter.submitList(details.types)
+                                tvAbilitiesDesc.text = details.abilities.joinToString(", ") { ability ->
+                                    ability.ability.name.replaceFirstChar()
+                                }
                                 statsAdapter.submitList(details.stats)
                             }
                         }
                     }
+                    is NetworkResult.Error -> {}
+                }
+            }
+        }
+    }
 
+    private fun showPokemonInfoSpeciesObserver() {
+        viewModel.apply {
+            getPokemonSpecies(name)
+            getPokemonSpecies.observe(viewLifecycleOwner) {
+                when (it) {
+                    is NetworkResult.Loading -> {}
+                    is NetworkResult.Success -> {
+                        val text = it.data?.flavorTextEntries
+                            ?.filter { lang -> lang.language.name == "en" }
+                            ?.map { flavor -> flavor.flavorText
+                                .replace("\n", " ")
+                                .replace("\\f", " ")
+                            }
+                        binding.tvAboutPokemonDesc.text = text.toString()
+                            .replace("[", "")
+                            .replace("]", "")
+                            .replace(".,", "")
+                    }
                     is NetworkResult.Error -> {}
                 }
             }

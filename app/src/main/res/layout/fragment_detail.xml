@@ -67,17 +67,75 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvHeightWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/text_height_weight"
+                    android:textColor="@color/black"
+                    app:layout_constraintTop_toBottomOf="@id/tvPokemonName"
+                    app:layout_constraintStart_toStartOf="@id/tvPokemonName"
+                    app:layout_constraintEnd_toEndOf="@id/tvPokemonName"/>
+
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvAbilities"
+                    android:id="@+id/rvTypes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:layout_marginHorizontal="36dp"
-                    tools:listitem="@layout/item_abilities"
+                    tools:listitem="@layout/item_types"
                     tools:itemCount="1"
-                    app:layout_constraintTop_toBottomOf="@id/tvPokemonName"
+                    app:layout_constraintTop_toBottomOf="@id/tvHeightWeight"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAboutPokemon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/primary_600"
+                    android:textStyle="bold"
+                    android:text="@string/text_about_pokemon"
+                    app:layout_constraintTop_toBottomOf="@id/rvTypes"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAboutPokemonDesc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    tools:text="@tools:sample/lorem"
+                    android:textColor="@color/black"
+                    app:layout_constraintTop_toBottomOf="@id/tvAboutPokemon"
+                    app:layout_constraintStart_toStartOf="@id/tvAboutPokemon"
+                    app:layout_constraintEnd_toEndOf="@id/tvAboutPokemon"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAbilities"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/primary_600"
+                    android:textStyle="bold"
+                    android:text="@string/text_abilities"
+                    app:layout_constraintTop_toBottomOf="@id/tvAboutPokemonDesc"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAbilitiesDesc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    tools:text="@tools:sample/lorem"
+                    android:textColor="@color/black"
+                    app:layout_constraintTop_toBottomOf="@id/tvAbilities"
+                    app:layout_constraintStart_toStartOf="@id/tvAboutPokemon"
+                    app:layout_constraintEnd_toEndOf="@id/tvAboutPokemon"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvStats"
@@ -89,7 +147,7 @@
                     android:textColor="@color/primary_600"
                     android:textStyle="bold"
                     android:text="@string/text_stats"
-                    app:layout_constraintTop_toBottomOf="@id/rvAbilities"
+                    app:layout_constraintTop_toBottomOf="@id/tvAbilitiesDesc"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
