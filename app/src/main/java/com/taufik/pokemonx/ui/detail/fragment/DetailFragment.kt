@@ -153,6 +153,7 @@ class DetailFragment : Fragment() {
                                             .replace("\n", " ")
                                             .replace("\\f", " ")
                                     }
+                                    .distinct()
                                 tvAboutPokemonDesc.text = text.toString()
                                     .replace("[", "")
                                     .replace("]", "")
